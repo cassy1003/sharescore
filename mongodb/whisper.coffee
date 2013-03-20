@@ -7,6 +7,8 @@ _params = {
   msg: String,
   type: String,
   date: String,
+  like: {type: Number, default: 0},
+  comments: {type: Number, default: 0},
   ts: Date,
 }
 # Actualy, collection name is 'users' in mongodb
