@@ -5,30 +5,12 @@ namespace('_socket', function(exports) {
   socket = io.connect(null, {
     port: 7777
   });
-  socket.on('connect', function(message) {
-    return console.log('socket.io connect');
-  });
+  socket.on('connect', function(message) {});
   socket.on('message', function(message) {
-    return console.log(message);
+    return _handler[message.method](message);
   });
   return exports.send = function(params) {
-    console.log(params);
     return socket.emit('message', params);
-  };
-});
-
-namespace('_message', function(exports) {
-  return exports.send = function() {
-    var message, who, whom;
-    message = $('#thanx-message').text();
-    whom = $('#thanx-whom').html();
-    who = $('#thanx-who').html();
-    return _socket.send({
-      method: 'send_thanx',
-      msg: message,
-      whom: whom,
-      who: who
-    });
   };
 });
 
@@ -152,5 +134,33 @@ namespace('rtc.face', function(exports) {
     if (img !== 'square') {
       return image.src = _image;
     }
+  };
+});
+
+namespace('_handler', function(exports) {
+  exports.sendMessage = function() {
+    var message, type, who, whom;
+    message = $('#send-message').val();
+    if (!message) {
+      alert('input message');
+      return;
+    }
+    whom = $('#send-whom').attr('value');
+    who = $('#send-who').attr('value');
+    type = $('#send-type').attr('value');
+    return _socket.send({
+      method: 'whisper',
+      type: type,
+      msg: message,
+      whom: whom,
+      who: who
+    });
+  };
+  exports.selectSendMenu = function(label, menu) {
+    $("#send-" + menu).attr('value', label);
+    return $("#send-" + menu).text($("#send-" + menu + "-" + label).text());
+  };
+  return exports.getFeed = function(params) {
+    return $("#feed-area").prepend(params.text);
   };
 });

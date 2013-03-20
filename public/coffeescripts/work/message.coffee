@@ -1,11 +1,24 @@
-namespace '_message', (exports) ->
+namespace '_handler', (exports) ->
 
-  exports.send = () ->
-    message = $('#thanx-message').text()
-    whom = $('#thanx-whom').html()
-    who = $('#thanx-who').html()
+  exports.sendMessage = () ->
+    message = $('#send-message').val()
+    unless message
+      alert 'input message'
+      return
+
+    whom = $('#send-whom').attr 'value'
+    who = $('#send-who').attr 'value'
+    type =  $('#send-type').attr 'value'
     _socket.send
-      method: 'send_thanx'
+      method: 'whisper'
+      type: type
       msg: message
       whom: whom
       who: who
+
+  exports.selectSendMenu = (label, menu) ->
+    $("#send-#{menu}").attr 'value', label
+    $("#send-#{menu}").text $("#send-#{menu}-#{label}").text()
+
+  exports.getFeed = (params) ->
+    $("#feed-area").prepend params.text
