@@ -14,6 +14,34 @@ namespace('_socket', function(exports) {
   };
 });
 
+namespace('_handler', function(exports) {
+  exports.sendMessage = function() {
+    var message, type, who, whom;
+    message = $('#send-message').val();
+    if (!message) {
+      alert('input message');
+      return;
+    }
+    whom = $('#send-whom').attr('value');
+    who = $('#send-who').attr('value');
+    type = $('#send-type').attr('value');
+    return _socket.send({
+      method: 'whisper',
+      type: type,
+      msg: message,
+      whom: whom,
+      who: who
+    });
+  };
+  exports.selectSendMenu = function(label, menu) {
+    $("#send-" + menu).attr('value', label);
+    return $("#send-" + menu).text($("#send-" + menu + "-" + label).text());
+  };
+  return exports.getFeed = function(params) {
+    return $("#feed-area").prepend(params.text);
+  };
+});
+
 namespace('rtc.video', function(exports) {
   var getUserMedia, onUserMediaError, onUserMediaSuccess, _videoUrl;
   _videoUrl = '';
@@ -134,33 +162,5 @@ namespace('rtc.face', function(exports) {
     if (img !== 'square') {
       return image.src = _image;
     }
-  };
-});
-
-namespace('_handler', function(exports) {
-  exports.sendMessage = function() {
-    var message, type, who, whom;
-    message = $('#send-message').val();
-    if (!message) {
-      alert('input message');
-      return;
-    }
-    whom = $('#send-whom').attr('value');
-    who = $('#send-who').attr('value');
-    type = $('#send-type').attr('value');
-    return _socket.send({
-      method: 'whisper',
-      type: type,
-      msg: message,
-      whom: whom,
-      who: who
-    });
-  };
-  exports.selectSendMenu = function(label, menu) {
-    $("#send-" + menu).attr('value', label);
-    return $("#send-" + menu).text($("#send-" + menu + "-" + label).text());
-  };
-  return exports.getFeed = function(params) {
-    return $("#feed-area").prepend(params.text);
   };
 });

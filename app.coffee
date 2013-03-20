@@ -32,3 +32,6 @@ server.listen app.get('port'), () ->
   console.log("Express server listening on port " + app.get('port'))
 
 socket.connect server
+
+dbWhisper = require('./mongodb/whisper')
+dbWhisper.connect()
