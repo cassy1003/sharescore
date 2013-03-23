@@ -3,9 +3,8 @@ io = require("socket.io")
 crypto = require("crypto")
 handler = require("./handler")
 
-_send = () ->
-_sendBroadcast = () ->
-_sendEmit = () ->
+_sendIdEmit = () ->
+_sendAllEmit = () ->
 
 exports.connect = (server) ->
   socket = io.listen server, {'log level': 1}
@@ -17,20 +16,20 @@ exports.connect = (server) ->
     client.on 'disconnect', () ->
       #client.broadcast()
 
-    _sendBroadcastEmit = (params) ->
-      client.broadcast.emit params.emit, params
+    _sendIdEmit = (params) ->
+      socket.sockets.socket(client.id).emit params.emit, params
 
-    _sendEmit = (params) ->
-      client.emit params.emit, params
+    _sendAllEmit = (params) ->
+      socket.sockets.emit params.emit, params
 
-exports.sendBroadcastEmit = (params) ->
-  _sendBroadcastEmit(params)
+exports.sendIdEmit = (params) ->
+  _sendIdEmit(params)
 
-exports.sendEmit = (params) ->
-  _sendEmit(params)
+exports.sendAllEmit = (params) ->
+  _sendAllEmit(params)
 
 exports.sendAlert = (message) ->
-  exports.sendEmit
+  exports.sendIdEmit
     emit: 'message'
     method: 'showAlert'
     message: message
