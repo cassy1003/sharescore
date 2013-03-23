@@ -17,15 +17,15 @@
           <p>あのとき言えなかった ありがとう</p>
         </div>
         <div class="span5 offset05">
-            <div class="btn-group">
-              <button id="send-type" class="btn dropdown-toggle none-border" data-toggle="dropdown" value="0">
-                [ありがとう]
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu">
-                <li><a id="send-type-0" onClick="_handler.selectSendMenu('0', 'type');">[ありがとう]</a><li>
-                <li><a id="send-type-1" onClick="_handler.selectSendMenu('1', 'type');">[ごめんね]</a><li>
-              </ul>
+            <div class="message-type">
+              <label class="radio">
+                <input type="radio" name="message-type" value="0" checked>
+                ありがとう
+              </label>
+              <label class="radio">
+                <input type="radio" name="message-type" value="1">
+                ごめんね
+              </label>
             </div>
           <div class="row-fluid">
             <textarea class="span9" id="send-message" placeholder="あなたの気持ちを"></textarea>
