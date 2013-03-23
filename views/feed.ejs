@@ -1,11 +1,11 @@
 <% result.forEach(function(data) { %>
-<li class="feed">
+<div class="feed-entry">
   <div class="feed-head">
     <div class="name"><%= data.name %></div>
     <div class="info"><%= data.date %></div>
   </div>
   <hr color="black" size="3">
   <div class="feed-text"><%= data.msg %></div>
-</li>
-<hr color="black" size="3">
+  <div id="star" class="btn btn-small"><i class="icon-star"></i></div>
+</div>
 <% }); %>

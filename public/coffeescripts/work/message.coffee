@@ -8,7 +8,7 @@ namespace '_handler', (exports) ->
 
     whom = $('#send-whom').attr 'value'
     who = $('#send-who').attr 'value'
-    type =  $('#send-type').attr 'value'
+    type = $('input["@name=message-type"]:checked').val()
     _socket.send
       method: 'whisper'
       type: type
