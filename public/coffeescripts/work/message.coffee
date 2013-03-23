@@ -2,13 +2,13 @@ namespace '_handler', (exports) ->
 
   exports.sendMessage = () ->
     message = $('#send-message').val()
-    type = $('input["@name=message-type"]:checked').val()
     unless message
       alert 'input message'
       return
 
     whom = $('#send-whom').attr 'value'
     who = $('#send-who').attr 'value'
+    type = $('input["@name=message-type"]:checked').val()
     _socket.send
       method: 'whisper'
       type: type
