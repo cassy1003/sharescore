@@ -33,9 +33,10 @@ button.none-border {
   height: auto;
 }
 
-.feed {
-  padding: 10px;
-  margin-bottom: 10px;
+.feed-entry{
+  border: 1px solid #ddd;
+  padding: 15px 15px 35px 15px;
+  margin-bottom: 18px;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
@@ -66,4 +67,8 @@ button.none-border {
 
 .left-contents {
   float: left;
+}
+
+#star {
+  float: right;
 }

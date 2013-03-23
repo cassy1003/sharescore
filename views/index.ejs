@@ -17,16 +17,16 @@
           <p>あのとき言えなかった ありがとう</p>
         </div>
         <div class="span5 offset05">
-            <div class="message-type">
-              <label class="radio">
-                <input type="radio" name="message-type" value="0" checked>
-                ありがとう
-              </label>
-              <label class="radio">
-                <input type="radio" name="message-type" value="1">
-                ごめんね
-              </label>
-            </div>
+          <div class="message-type">
+            <label class="radio">
+              <input type="radio" name="message-type" value="0" checked>
+              ありがとう
+            </label>
+            <label class="radio">
+              <input type="radio" name="message-type" value="1">
+              ごめんね
+            </label>
+          </div>
           <div class="row-fluid">
             <textarea class="span9" id="send-message" placeholder="あなたの気持ちを"></textarea>
           </div>
@@ -54,9 +54,9 @@
             <a type="button" class="btn btn-primary" onClick="_handler.sendMessage();">つたえる</a>
           </div>
           <hr color="black" size="5">
-          <ul class="feed-area" id="feed-area">
+          <div class="feed-area" id="feed-area">
             <% include feed %>
-          </ul>
+          </div>
         </div>
       </div>
     </div>
