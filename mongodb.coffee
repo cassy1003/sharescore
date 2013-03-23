@@ -26,13 +26,12 @@ exports.connect = (col, params) ->
     _DB[col] = Database
 
 
-exports.find = (col, params) ->
+exports.find = (col, query, field = [], option = {}) ->
   $.Deferred (d) ->
     if _DB[col]?
       db = _DB[col]
-      db.find params, (err, docs) ->
+      db.find query, field, option, (err, docs) ->
         unless err
-          console.log docs
           d.resolve docs
         else
           console.log("error function of find")

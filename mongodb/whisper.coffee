@@ -21,4 +21,7 @@ exports.save = (params) ->
   mongodb.save _col, params
 
 exports.find = (params = {}) ->
-  mongodb.find _col, params
+  query = params.query ? {}
+  field = params.field ? {}
+  option = params.option ? {}
+  mongodb.find _col, query, field, option
