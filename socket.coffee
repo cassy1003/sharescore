@@ -14,24 +14,23 @@ exports.connect = (server) ->
     client.on 'message', (message) ->
       handler[message.method] message
 
-    _send = (params) ->
-      client.send params
+    client.on 'disconnect', () ->
+      #client.broadcast()
 
-    _sendBroadcast = (params) ->
-      client.broadcast message
+    _sendBroadcastEmit = (params) ->
+      client.broadcast.emit params.emit, params
 
     _sendEmit = (params) ->
       client.emit params.emit, params
 
-    client.on 'disconnect', () ->
-      #client.broadcast()
-
-exports.send = (params) ->
-  _send(params)
-
-exports.sendBroadcast = (params) ->
-  _sendBroadcast(params)
+exports.sendBroadcastEmit = (params) ->
+  _sendBroadcastEmit(params)
 
 exports.sendEmit = (params) ->
   _sendEmit(params)
 
+exports.sendAlert = (message) ->
+  exports.sendEmit
+    emit: 'message'
+    method: 'showAlert'
+    message: message

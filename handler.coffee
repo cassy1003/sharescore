@@ -20,10 +20,12 @@ exports.whisper = (message) ->
     ts: date.getTime()
 
   if message.whom is '0'
-    socket.sendEmit
+    socket.sendBroadcastEmit
       emit: 'message'
       method: 'getFeed'
       text: exports.makeFeed(message)
+
+  socket.sendAlert 'ささやきました.'
 
 exports.getWhisper = () ->
   dbWhisper.find().done(
@@ -33,7 +35,7 @@ exports.getWhisper = () ->
 
 exports.makeFeed = (params) ->
   if params.who is '0'
-    name = 'no name'
+    name = 'anonymous'
   else
     name = 'test'
 

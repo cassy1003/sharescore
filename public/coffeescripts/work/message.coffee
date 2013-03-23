@@ -15,6 +15,7 @@ namespace '_handler', (exports) ->
       msg: message
       whom: whom
       who: who
+    $('#send-message').val('')
 
   exports.selectSendMenu = (label, menu) ->
     $("#send-#{menu}").attr 'value', label
@@ -22,3 +23,6 @@ namespace '_handler', (exports) ->
 
   exports.getFeed = (params) ->
     $("#feed-area").prepend params.text
+
+  exports.showAlert = (params) ->
+    alert params.message
