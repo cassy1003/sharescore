@@ -3,12 +3,14 @@ socket = require("./socket")
 dbWhisper = require("./mongodb/whisper")
 
 exports.whisper = (message) ->
+  date = new Date()
+  message.date = exports.getDate(date)
   dbWhisper.save
     id: message.who
     to: message.whom
     msg: message.msg
     type: message.type
-    date: exports.getDate()
+    date: message.date
     ts: date.getTime()
 
   if message.whom is '0'
@@ -43,8 +45,8 @@ exports.makeFeed = (params) ->
    </div>
   """
 
-exports.getDate = () ->
-  date = new Date()
+exports.getDate = (date = null) ->
+  date = new Date() unless date
   y = date.getFullYear()
   m = date.getMonth() + 1
   d = date.getDate()

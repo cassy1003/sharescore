@@ -4,7 +4,14 @@ $ = require('jquery-deferred')
 
 _DB_NAME = 'test'
 _DB = {}
-_DB_CONNECT = false
+
+exports.database = () ->
+  mongoose.connect "mongodb://localhost/#{_DB_NAME}",
+    (err) ->
+      if err
+        console.log(err)
+      else
+        console.log('connection success!')
 
 exports.connect = (col, params) ->
   return if _DB[col]?
@@ -12,21 +19,9 @@ exports.connect = (col, params) ->
   DatabaseSchema = new mongoose.Schema(params)
   Database = mongoose.model(col, DatabaseSchema)
 
-  unless _DB_CONNECT
-    mongoose.connect "mongodb://localhost/#{_DB_NAME}",
-      (err) ->
-        if err
-          console.log(err)
-        else
-          _DB_CONNECT = true
-          console.log('connection success!')
-          _DB[col] = Database
-  else
-    console.log('already connect!')
-    _DB[col] = Database
+  _DB[col] = Database
 
-
-exports.find = (col, query, field = [], option = {}) ->
+exports.find = (col, query, field = {}, option = {}) ->
   $.Deferred (d) ->
     if _DB[col]?
       db = _DB[col]

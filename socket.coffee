@@ -1,6 +1,5 @@
 
 io = require("socket.io")
-crypto = require("crypto")
 handler = require("./handler")
 
 _sendIdEmit = () ->
