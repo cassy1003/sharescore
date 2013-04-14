@@ -27,4 +27,9 @@ exports.index = (req, res) ->
       res.render 'index',
         title: _title
         result: result
+        auth: req.session.auth?
   )
+
+exports.signout = (req, res) ->
+  delete req.session.auth
+  res.redirect 'http://whisper.q-x-p.net/'
