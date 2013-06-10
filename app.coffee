@@ -19,24 +19,24 @@ oauth.twitter()
 
 app = express()
 app.configure () ->
-  app.set('port', process.env.PORT || 7777)
-  app.set('views', __dirname + '/views')
-  app.set('view engine', 'ejs')
-  app.use(express.favicon())
-  app.use(express.logger('dev'))
-  app.use(express.bodyParser())
-  app.use(express.cookieParser('secret', 'secret-here'))
-  app.use(express.session({key: 'sess_id', secret: 'secret-here'}))
-  app.use(express.methodOverride())
-  app.use(everyauth.middleware(app))
-  app.use(app.router)
-  app.use(express.static(path.join(__dirname, 'public')))
+  app.set 'port', process.env.PORT || 5050
+  app.set 'views', __dirname + '/views'
+  app.set 'view engine', 'ejs'
+  app.use express.favicon()
+  app.use express.logger('dev')
+  app.use express.bodyParser()
+  app.use express.cookieParser('secret', 'secret-here')
+  app.use express.session({key: 'sess_id', secret: 'secret-here'})
+  app.use express.methodOverride()
+  app.use everyauth.middleware(app)
+  app.use app.router
+  app.use express.static(path.join(__dirname, 'public'))
 
 app.configure 'development', () ->
   app.use(express.errorHandler())
 
-app.get('/', routes.index)
-app.get('/signout', routes.signout)
+app.get '/', routes.index
+app.get '/signout', routes.signout
 
 app.locals (req, res) ->
   app.locals.session = req.session

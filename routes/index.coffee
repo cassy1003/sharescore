@@ -1,7 +1,7 @@
 
 dbWhisper = require("../mongodb/whisper")
 
-_title = 'whisper'
+_title = 'Share Scores'
 exports.index = (req, res) ->
   dbWhisper.find
     query:
@@ -27,9 +27,9 @@ exports.index = (req, res) ->
       res.render 'index',
         title: _title
         result: result
-        auth: req.session.auth?
+        auth: req.session.auth?.twitter?.user?
   )
 
 exports.signout = (req, res) ->
   delete req.session.auth
-  res.redirect 'http://whisper.q-x-p.net/'
+  res.redirect 'http://sharescores.q-x-p.net/'
