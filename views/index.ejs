@@ -29,25 +29,28 @@
   <div class="navbar-inner">
     <div class="container-fluid">
       <div class="brand red" href="/"><%= title %></div>
-      <ul class="nav">
-        <li class="active"><a href="/">Top</a></li>
-        <% if (auth){ %>
-        <li><a href="/MyScores">MyScores</a></li>
-        <li><a href="/MyFavorites">Favorites</a></li>
-        <% } else { %>
-        <li><a onClick="alert('Please sign-in with twitter account');">MyScores</a></li>
-        <li><a onClick="alert('Please sign-in with twitter account');">Favorites</a></li>
-        <% } %>
-      </ul>
-      <ul class="nav pull-right">
-      <li class="active">
-      <% if (auth){ %>
-      <a href="/signout"><u>Sign-out</u></a>
-      <% } else { %>
-      <a href="http://sharescores.q-x-p.net/auth/twitter"><u>Sign-in with twitter</u></a>
-      <% } %>
-      </li>
-      </ul>
+      <div class="nav-collapse collapse navbar-inverse-collapse">
+        <ul class="nav nav-pills">
+          <li class="active"><a href="/">Top</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">MyScores<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a >Download</a></li>
+              <li><a >Upload</a></li>
+            </ul>
+          </li>
+          <li><a onClick="alert('Please sing-in')">Favorites</a></li>
+        </ul>
+        <ul class="nav pull-right">
+          <li class="active">
+          <% if (auth){ %>
+            <a href="/signout"><u>Sign-out</u></a>
+          <% } else { %>
+            <a href="http://sharescores.q-x-p.net/auth/twitter"><u>Sign-in with twitter</u></a>
+          <% } %>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
@@ -117,6 +120,11 @@ Copyright.
 </div>
 <!--/container-->
 
-
+ <script type="text/javascript">
+    $('.dropdown-toggle').dropdown();
+    window.addEventListener("load", function(){
+      rtc.video.on();
+    }, false);
+  </script>
 </body>
 </html>
