@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/_stylesheets/background.css">
+  <script src="/javascripts/jquery.js"></script>
+</head>
+<body onLoad="load()" onresize="load()">
+  <div id="wrapper">
+    <canvas id="bg_canv"></canvas>
+  </div>
+  <div style="float:left">動作確認ブラウザ:Chrome, Firefox, Safari, IE9</div>
+  <div id='bg-color-label' style="float:right">#FFE775</div>
+  <div id="container1">
+    <h1 align="center">Welcome (title)</h1>
+    <div id="content1">
+      <div style="float:right">
+        <div align="right">
+          <p>ドットの位置と大きさをアクセスするたびにランダムで表示します。</p>
+          <hr size="2">
+          <p>テーブルのボタンから背景色とドット色を変更できます。</p>
+          <p>5 colorは５色のドットが表示されます。</p>
+          <p>randamはランダムで色を決めて表示します。</p>
+          <p>このとき、好みの色があったらドットの下の数字を教えてください。</p>
+          <hr size="2">
+          <p>ドットのサイズの最大値、表示するドットの個数も変更できます。</p>
+          <p>サイズや個数で良いのがあれば、その数を教えてください。</p>
+          <p>ちなみにdefaultの個数は30個にしてます。</p>
+          <p>(5 colorはオレンジが10個で、残りの4色は5個。)</p>
+          <hr size="2">
+          <p>unclearボタンを押すと色を選択したときにクリアしないようになります。</p>
+          <p>複数色のパターンを試したいときに使ってください。</p>
+          <p>clearボタンを押すと、元に戻り、選んだ一色表示になります。</p>
+          <hr size="2">
+          <p>背景色も変更できます。</p>
+          <p>好みの背景色があったら、画面右上の表示を教えてください。</p>
+        </div>
+      </div>
+      <div style="float:left">
+        <table border="1">
+          <tr>
+            <th>bg color</th><th>dot color</th>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor('#FFFFFF')" style="background-color:#FFFFFF;">FFFFFF</button></td>
+            <td><button onclick="changeColor('#FFFFFF')" style="background-color:#FFFFFF;">FFFFFF</button></td>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor('#FFE775')" style="background-color:#FFE775;">FFE775</button></td>
+            <td><button onclick="changeColor('#FFE775')" style="background-color:#FFE775;">FFE775</button></td>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor('#FF9900')" style="background-color:#FF9900;">FF9900</button></td>
+            <td><button onclick="changeColor('#FF9900')" style="background-color:#FF9900;">FF9900</button></td>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor('#FF7575')" style="background-color:#FF7575;">FF7575</button></td>
+            <td><button onclick="changeColor('#FF7575')" style="background-color:#FF7575;">FF7575</button></td>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor('#AEFF35')" style="background-color:#AEFF35;">AEFF35</button></td>
+            <td><button onclick="changeColor('#AEFF35')" style="background-color:#AEFF35;">AEFF35</button></td>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor('#35FFBD')" style="background-color:#35FFBD;">35FFBD</button></td>
+            <td><button onclick="changeColor('#35FFBD')" style="background-color:#35FFBD;">35FFBD</button></td>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor('#35E6FF')" style="background-color:#35E6FF;">35E6FF</button></td>
+            <td><button onclick="changeColor('#35E6FF')" style="background-color:#35E6FF;">35E6FF</button></td>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor('#10B2E1')" style="background-color:#10B2E1;">10B2E1</button></td>
+            <td><button onclick="changeColor('#10B2E1')" style="background-color:#10B2E1;">10B2E1</button></td>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor('#F2D7FF')" style="background-color:#F2D7FF;">F2D7FF</button></td>
+            <td><button onclick="changeColor('#F2D7FF')" style="background-color:#F2D7FF;">F2D7FF</button></td>
+          </tr>
+          <tr align="center">
+            <td></td>
+            <td><button onclick="fiveColor()" style="background-color:#FFFFFF;">5 Color</button></td>
+          </tr>
+          <tr align="center">
+            <td><button onclick="changeBgColor()" style="background-color:#FF9900;">Random</button></td>
+            <td><button onclick="changeColor()" style="background-color:#FF9900;">Random</button></td>
+          </tr>
+        </table>
+        <table border="1">
+          <tr>
+            <td><input type="text" id="max_dot_size" placeholder="80" style="width:40px" /></td>
+            <td><button onclick="changeSize()">change max size of dots</button></td>
+          </tr>
+          <tr>
+            <td><input type="text" id="dot_num" placeholder="30" style="width:40px"/></td>
+            <td><button onclick="changeNum()">change number of dots</button></td>
+          </tr>
+        </table>
+        <table border="1">
+          <tr>
+            <td><button onclick="changeClear(true)">clear</button></td>
+            <td><button onclick="changeClear(false)">unclear</button></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id='content2' align="center" style="padding:25px 0;">
+        <hr size="2">
+        <p>背景の上に文字をそのまま載せたら見にくいかなと思って、上のようにしていました。</p>
+        <p>どちらがよいでしょうか？</p>
+        <p>半透明の具合は調節することは可能です。</p>
+        <p>見にくいかなと思って、半透明にしてみたものの、実はそのままでも結構見えるやんと思っているなうです。</p>
+        <p>半透明の方が実は見にくいのではないか説もあります。</p>
+        <p>こうやって、長く書いているのは、少しでもサンプルとして長いほうが良いかなと思ったからです。</p>
+        <p>ドットの配置や描写はjavascriptでやっています。<p>
+        <p>文章やテーブルの位置などを決めるCSSは苦手なので適当です。ここからはあーみんの出番！？w</p>
+        <p><font color="red">これより下は、特に読んでほしい情報はありません。</font></p>
+        <p>(というか日記です。)</p>
+        <p>今週は仕事がとてもとても忙しかったので、今日は家で寝てました。</p>
+        <p>朝起きてちょっとパソコンカタカタして、5時間くらいお昼寝して、またパソコンカタカタしている、そんな土曜日でございました。</p>
+        <p>今日という日を迎えてから、まだ何も口の中に放り込んでいないので、とてもとてもお腹がすいてきました。</p>
+        <p><font color="blue">誰か作りに来てくれないかなぁ．．．</font></p>
+        <p>とか夢を膨らましながら、ラーメンを食べに行こうか、牛丼を食べに行こうか、自分でチャーハンを作ろうか迷っております。</p>
+        <p>でも今日はとにかく家でゆっくりしたいのです。</p>
+        <p>今週仕事が忙しかったと書きましたが、なぜ忙しかったかというと、締め切りが近いのに加えて、木金日月火と飲み会があるのです。</p>
+        <p>木金の飲み会は非常に楽しかった。</p>
+        <p>明日は知らない人たちと飲むからどうなることやら。</p>
+        <p>お金がどんどん消えて行きます。</p>
+        <p>来週は、大阪に帰るし。</p>
+        <p>あっ、来週の土曜はワンビ飲み会や！！</p>
+        <p>1次会が結構早い時間みたいやから、2次会があることを期待しております。</p>
+        <p>てか、久しぶりに会うし、２時間とかじゃ短すぎる</p>
+        <p>オールでも良いくらい！</p>
+        <p>何次会からの参加でもお待ちしております</p>
+        <p>オールでも良いくらい！</p>
+        <p>大事なことなので２回言いました。</p>
+        <p>実際はそんな若さを持ち合わせていないという噂もありますが、それくらいの気持ちです。</p>
+        <p>そんなこんなで、I'm so hungry.... X(</p>
+        <p>背景が半透明じゃなかったらこんな感じになります</p>
+        <p>ちゃんちゃん</p>
+        <p>(2013.7.6 21:00)</p>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+var _num = 30;
+var _size = 80;
+var _color = '#FF9900';
+var _clear = true;
+function load(){
+  $('#bg_canv').attr({height: $("#wrapper").height()});
+  $('#bg_canv').attr({width:$("#wrapper").width()});
+  draw(_color);
+}
+function changeSize(){
+  if ($('#max_dot_size').val()){
+    _size = $('#max_dot_size').val();
+    //draw(_color);
+  }
+}
+function changeNum(num){
+  if (num) {
+    _num = num;
+  }
+  if ($('#dot_num').val()) {
+    _num = $('#dot_num').val();
+    //draw(_color);
+  }
+}
+function changeClear(flag) {
+  _clear = flag;
+}
+function changeBgColor(color){
+  if (color == null) {
+    var r = Math.random()*255;  // R 円の色を決める
+    var g = Math.random()*255;  // G
+    var b = Math.random()*255;  // B
+    r = Math.ceil(r);
+    g = Math.ceil(g);
+    b = Math.ceil(b);
+    color = "rgb(" + r + "," + g + "," + b + ")";
+  }
+  $('#bg-color-label').text(color);
+  $('body').css('background-color', color)
+}
+function changeColor(color){
+  if (color) {
+    _color = color;
+  }
+  draw(color);
+}
+function fiveColor() {
+  clear = _clear;
+  changeNum(5);
+  draw('#35E6FF');
+  changeClear(false);
+  draw('#35FFBD');
+  draw('#FF7575');
+  draw('#F2D7FF');
+  changeNum(10);
+  draw('#FF9900');
+  changeNum(15);
+  changeClear(clear);
+}
+function draw(color){
+
+  var canvas = document.getElementById('bg_canv');
+  var ctx = canvas.getContext('2d');
+  var star = new Array(_num); //円の情報を格納する配列を作る
+  if (_clear) {
+    ctx.clearRect(0,0,$('#bg_canv').width(), $('#bg_canv').height());
+  }
+
+  for(i = 0; i < _num; i++){
+    x = Math.random()*canvas.width;     // x座標をランダムに決める
+    y = Math.random()*canvas.height;  // y座標をランダムに決める
+    r = Math.random()*_size;    // 半径rをランダムに決める
+
+    if (color == null){
+      var r_c = Math.random()*255;  // R 円の色を決める
+      var g_c = Math.random()*255;  // G
+      var b_c = Math.random()*255;  // B
+      r_c = Math.ceil(r_c);
+      g_c = Math.ceil(g_c);
+      b_c = Math.ceil(b_c);
+    } else {
+      r_c = HexToR(color);
+      g_c = HexToG(color);
+      b_c = HexToB(color);
+    }
+    dot_color = "rgba(" + r_c + "," + g_c + "," + b_c + ", 0.5)";
+    ctx.beginPath();
+    ctx.fillStyle = dot_color;
+    ctx.arc(x, y, r, 0, Math.PI*2, false);
+    ctx.fill();
+    if (color == null) {
+      ctx.fillStyle = 'black';
+      ctx.fillText(r_c + ',' + g_c + ',' + b_c, x - 25, y + r + 10);
+    }
+  }
+}
+function HexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+function HexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+function HexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+function rgbTo16(col) {return "#" + col.match(/\d+/g).map(function(a){return ("0" + parseInt(a).toString(16)).slice(-2)}).join("");}
+
+  </script>
+
+</body>
+</html>
