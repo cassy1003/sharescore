@@ -1,130 +1,67 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/xhtml" xml:lang="ja" lang="ja">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
-<meta http-equiv="Content-Script-Type" content="text/javascript" />
-<title>share scores</title>
-<meta name="copyright" content="cassy" />
-<meta name="description" content="share scores" />
-<meta name="keywords" content="share,score,a cappella" />
-
-<link rel='stylesheet' href='/stylesheets/bootstrap.css' />
-<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
-<link rel='stylesheet' href='/stylesheets/style.css' />
-
-<script type="text/javascript" src="/javascripts/jquery.js"></script>
-<script type='text/javascript' src='/javascripts/bootstrap.js'></script>
-<script type='text/javascript' src='/javascripts/bootstrap-dropdown.js'></script>
-<script type='text/javascript' src='/javascripts/bootstrap-button.js'></script>
-<script type="text/javascript" src="/javascripts/base_script.js"></script>
+  <meta charset="UTF-8">
+  <title>onebusiness</title>
+  <script type="text/javascript" src="/javascripts/jquery.js"></script>
 </head>
 
-
 <body>
+<% if (!auth){ %>
+  <a href="<%= conf.domain %>/auth/twitter"><u>Sign-in with twitter</u></a>
+  <hr>
+<% } else { %>
+  <p><a href="/signout"><u>Sign-out</u></a></p>
+  <hr>
+  <ul>
+    <li>
+    id: <%= user.id_str %>
+    <li>
+    name: <%= user.name %>
+    <li>
+    nickname: <%= user.screen_name %>
+    <li>
+    location: <%= user.location %>
+    <li>
+    description: <%= user.description %>
+    <li>
+    url: <%= user.url %>
+    <li>
+    protected: <%= user.protected %>
+    <li>
+    timezone: <%= user.time_zone %>
+    <li>
+    language: <%= user.lang %>
+    <li>
+    profileImage: <img src="<%= user.profile_image_url %>">
+  </ul>
+  <hr>
+  <form method="POST" action="/upload" enctype="multipart/form-data">
+    <p><input type="file" name="upload_file" accept="application/pdf"></p>
+    <p><input type="text" name="upload_text"></p>
+    <p><input type="submit" value="send"></p>
+  </form>
+  <p><font color="red">[TODO]</font> Chromeだとpdf限定にできたが、firefoxだとどんなファイルでもアップロードできてしまう。ブラウザのversion依存かな。あとで直す。というか、どのファイル形式を許可しようか。</p>
+  <p><font color="red">[TODO]</font> ファイルを選ばなくても送信できてしまう気がする。テキストのみは送信できないようにする。</p>
+  <p>注）テスト用なので、定期的にファイル消します。あんまり大きいファイルはやめてね(;_;)</p>
+  <% if (score) { %>
+    <table border="1">
+      <tr>
+        <th align="left">date</th><th align="left">user</th><th align="left">file</th><th align="left">message</th><th align="left">size(Byte)</th>
+      </tr>
+    <% score.forEach(function(val){ %>
+      <tr>
+        <td><%= val.date %></td>
+        <td>@<%= val.info.user.screen_name %></td>
+        <td><a href="/score/<%= val.info.savename %>" target="_blank"><%= val.info.filename %></a></td>
+        <td><%= val.info.text %></td>
+        <td><%= val.info.filesize %></td>
+      <tr>
+    <% }) %>
+    </table>
+  <% } %>
+<% } %>
 
-<div class="row">
-<div class="span11">
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <div class="brand red" href="/"><%= title %></div>
-      <div class="nav-collapse collapse navbar-inverse-collapse">
-        <ul class="nav nav-pills">
-          <li class="active"><a href="/">Top</a></li>
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">MyScores<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a >Download</a></li>
-              <li><a >Upload</a></li>
-            </ul>
-          </li>
-          <li><a onClick="alert('Please sing-in')">Favorites</a></li>
-        </ul>
-        <ul class="nav pull-right">
-          <li class="active">
-          <% if (auth){ %>
-            <a href="/signout"><u>Sign-out</u></a>
-          <% } else { %>
-            <a href="http://sharescores.q-x-p.net/auth/twitter"><u>Sign-in with twitter</u></a>
-          <% } %>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="container" class="row">
-
-<div id="sub" class="span2 margin-left-10">
-
-<h3>Download Ranking</h3>
-<ul class="submenu">
-<li><a href="#">AllGenre</a></li>
-<li><a href="#">JapaneseMusic</a></li>
-<li><a href="#">ForeignMusic</a></li>
-<li><a href="#">Arrenger</a></li>
-<li><a href="#">Group</a></li>
-</ul>
-
-<h3>Upload Ranking</h3>
-<ul class="submenu">
-<li><a href="#">AllGenre</a></li>
-<li><a href="#">JapaneseMusic</a></li>
-<li><a href="#">ForeignMusic</a></li>
-<li><a href="#">Arrenger</a></li>
-<li><a href="#">Group</a></li>
-</ul>
-<p>hoho</p>
-
-</div>
-<!--/sub-->
-
-<div id="main" class="span7 margin-left-50">
-
-<h2>Notification</h2>
-<p>hogehoge<br />
-<a href="http://sharescores.q-x-p.net/" target="_blank">sample</a></p>
-
-<h2>Recently Upload</h2>
-
-<div class="new">
-<dl>
-<dt>2013/06/10</dt>
-<dd><a href="/">hoho</a><img src="images/icon_new.gif" alt="NEW" width="30" height="11" /></dd>
-</dl>
-<dl>
-<dt>2013/06/01</dt>
-<dd>test<img src="images/icon_up.gif" alt="UP" width="30" height="11" /></dd>
-</dl>
-<dl>
-<dt>2013/05/20</dt>
-<dd>sample</dd>
-</dl>
-</div>
-<!--/new-->
-
-</div>
-<!--/main-->
-
-</div>
-</div>
-
-<div id="footer">
-Copyright.
-</div>
-<!--/footer-->
-
-
-</div>
-<!--/container-->
-
- <script type="text/javascript">
-    $('.dropdown-toggle').dropdown();
-    window.addEventListener("load", function(){
-      rtc.video.on();
-    }, false);
-  </script>
 </body>
 </html>
+

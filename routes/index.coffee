@@ -1,35 +1,39 @@
 
-dbWhisper = require("../mongodb/whisper")
+#dbWhisper = require("../mongodb/whisper")
+userM = require '../model/user'
+scoreM = require '../model/score'
+conf = require('../conf').getConf()
 
-_title = 'Share Scores'
-exports.index = (req, res) ->
-  dbWhisper.find
-    query:
-      to: '0'
-    option:
-      sort:
-        ts: -1
-  .done(
-    (data) ->
-      result = []
-      for k, v of data
-        if v.id is '0'
-          name = 'anonymous'
-        else
-          # TODO:
-          # get user_info
-          name = 'test'
-        result.push
-          date: v.date
-          type: v.type
-          msg: v.msg
-          name: name
-      res.render 'index',
-        title: _title
-        result: result
-        auth: req.session.auth?.twitter?.user?
-  )
+exports.index = (req, res, params = {}) ->
+  res.render 'index',
+    title: conf.title
+    auth: req.session.auth?.twitter?.user?
+    user: userM.getUserInfoFromTwitter(req.session.auth?.twitter?.user)
+    conf: conf
+    score: scoreM.getScore()
+  #dbWhisper.find
+  #  query:
+  #    to: '0'
+  #  option:
+  #    sort:
+  #      ts: -1
+  #.done(
+  #  (data) ->
+  #    result = []
+  #    for k, v of data
+  #      if v.id is '0'
+  #        name = 'anonymous'
+  #      else
+  #        # TODO:
+  #        # get user_info
+  #        name = 'test'
+  #      result.push
+  #        date: v.date
+  #        type: v.type
+  #        msg: v.msg
+  #        name: name
+  #)
 
 exports.signout = (req, res) ->
   delete req.session.auth
-  res.redirect 'http://sharescores.q-x-p.net/'
+  res.redirect conf.domain

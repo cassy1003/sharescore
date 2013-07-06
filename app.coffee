@@ -4,9 +4,11 @@ http = require('http')
 path = require('path')
 everyauth = require("everyauth")
 
-socket = require("./socket")
+#socket = require("./socket")
 routes = require('./routes')
+post = require('./routes/post')
 oauth = require("./oauth")
+conf = require("./conf").getConf()
 
 mongodb = require('./mongodb')
 mongodb.database()
@@ -19,14 +21,14 @@ oauth.twitter()
 
 app = express()
 app.configure () ->
-  app.set 'port', process.env.PORT || 5050
+  app.set 'port', process.env.PORT || conf.port
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'ejs'
   app.use express.favicon()
-  app.use express.logger('dev')
-  app.use express.bodyParser()
-  app.use express.cookieParser('secret', 'secret-here')
-  app.use express.session({key: 'sess_id', secret: 'secret-here'})
+  app.use express.logger 'dev'
+  app.use express.bodyParser {uploadDir: './tmp'}
+  app.use express.cookieParser 'secret', 'secret-here' # session
+  app.use express.session {key: 'sess_id', secret: 'secret-here'} # session
   app.use express.methodOverride()
   app.use everyauth.middleware(app)
   app.use app.router
@@ -38,6 +40,8 @@ app.configure 'development', () ->
 app.get '/', routes.index
 app.get '/signout', routes.signout
 
+app.post '/upload', post.upload
+
 app.locals (req, res) ->
   app.locals.session = req.session
 
@@ -45,7 +49,7 @@ server = http.createServer(app)
 server.listen app.get('port'), () ->
   console.log("Express server listening on port " + app.get('port'))
 
-socket.connect server
+#socket.connect server
 
 dbWhisper = require('./mongodb/whisper')
 dbWhisper.connect()

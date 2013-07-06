@@ -1,6 +1,7 @@
 
 everyauth = require('everyauth')
 dbUser = require('./mongodb/user')
+conf = require('./conf').getConf()
 
 everyauth.everymodule
   .handleLogout (req, res) ->
@@ -20,11 +21,12 @@ everyauth.everymodule
     req.user = userId
     callback(null, userId)
 
+#強制ログインフォーム用 認証URL：https://api.twitter.com/oauth/authorize?force_login=true
 exports.twitter = () ->
   everyauth.twitter.configure
-    consumerKey: 'TqN2L0KkvZ23GLYjUIbcw'
-    consumerSecret: 'INUQX9y5ZmAcr19kxIiq6WWlPVzwfugkJbdSvc'
-    myHostname: 'http://sharescores.q-x-p.net'
+    consumerKey: conf.twitter.consumerKey
+    consumerSecret: conf.twitter.consumerSecret
+    myHostname: conf.domain
     findOrCreateUser: (session, accessToken, accessTokenSecret, twitterUserData) ->
       promise = this.Promise()
       id = twitterUserData.id_str
@@ -46,7 +48,7 @@ exports.twitter = () ->
       #  return promise
       return promise
 
-    redirectPath: 'http://sharescores.q-x-p.net/'
+    redirectPath: conf.domain
 
 _userInfo = {}
 exports.userInfo = (key, value = null) ->

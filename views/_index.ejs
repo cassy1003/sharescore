@@ -1,70 +1,130 @@
-<!DOCTYPE html>
-<html>
-  <% include header %>
-  <body>
-    <% include navi %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>share scores</title>
+<meta name="copyright" content="cassy" />
+<meta name="description" content="share scores" />
+<meta name="keywords" content="share,score,a cappella" />
+
+<link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+<link rel='stylesheet' href='/stylesheets/bootstrap-responsive.css' />
+<link rel='stylesheet' href='/stylesheets/style.css' />
+
+<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<script type='text/javascript' src='/javascripts/bootstrap.js'></script>
+<script type='text/javascript' src='/javascripts/bootstrap-dropdown.js'></script>
+<script type='text/javascript' src='/javascripts/bootstrap-button.js'></script>
+<script type="text/javascript" src="/javascripts/base_script.js"></script>
+</head>
+
+
+<body>
+
+<div class="row">
+<div class="span11">
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
     <div class="container-fluid">
-      <div class="row">
-        <div class="hero-unit-20 left-contents">
-          <p>ありがとう</p>
-          <p>偶然出会った ありがとう</p>
-          <p>店員さんに ありがとう</p>
-          <p>身近な人に ありがとう</p>
-          <p></p>
-          <p>もう一度言いたい ありがとう</P>
-          <p>今だから言いたい ありがとう</P>
-          <p>今さら言えない ありがとう</p>
-          <p>あのとき言えなかった ありがとう</p>
-        </div>
-        <div class="span5 offset05">
-          <div class="entry-form">
-            <div class="message-type">
-              <label class="radio">
-                <input type="radio" name="message-type" value="0" checked>
-                ありがとう
-              </label>
-              <label class="radio">
-                <input type="radio" name="message-type" value="1">
-                ごめんね
-              </label>
-            </div>
-            <div class="row-fluid">
-              <textarea class="span9" id="send-message" placeholder="あなたの気持ちを"></textarea>
-            </div>
-            <div class="btn-toolbar" style="margin: 0;">
-              <div class="btn-group">
-                <button class="btn" id="send-whom" value="0">世界中に</button>
-                <button class="btn dropdown-toggle" data-toggle="dropdown">
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a id="send-whom-0" onClick="_handler.selectSendMenu('0', 'whom');">世界中に</a><li>
-                  <li><a id="send-whom-1" onClick="_handler.selectSendMenu('1', 'whom');">友だちに</a><li>
-                </ul>
-              </div>
-              <div class="btn-group">
-                <button class="btn" id="send-who" value="0">匿名で</button>
-                <button class="btn dropdown-toggle" data-toggle="dropdown">
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a id="send-who-0" onClick="_handler.selectSendMenu('0', 'who');">匿名で</a><li>
-                  <li><a id="send-who-1" onClick="_handler.selectSendMenu('1', 'who');">名前で</a><li>
-                </ul>
-              </div>
-              <a type="button" class="btn btn-primary" onClick="_handler.sendMessage();">つたえる</a>
-            </div>
-          </div>
-          <div class="feed-area" id="feed-area">
-            <% include feed %>
-          </div>
-        </div>
+      <div class="brand red" href="/"><%= title %></div>
+      <div class="nav-collapse collapse navbar-inverse-collapse">
+        <ul class="nav nav-pills">
+          <li class="active"><a href="/">Top</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">MyScores<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a >Download</a></li>
+              <li><a >Upload</a></li>
+            </ul>
+          </li>
+          <li><a onClick="alert('Please sing-in')">Favorites</a></li>
+        </ul>
+        <ul class="nav pull-right">
+          <li class="active">
+          <% if (auth){ %>
+            <a href="/signout"><u>Sign-out</u></a>
+          <% } else { %>
+            <a href="http://sharescores.q-x-p.net/auth/twitter"><u>Sign-in with twitter</u></a>
+          <% } %>
+          </li>
+        </ul>
       </div>
     </div>
-    <script type="text/javascript" src="/javascripts/core.js"></script>
-    <script type="text/javascript" src="/javascripts/work.js"></script>
-    <script type="text/javascript">
+  </div>
+</div>
+
+<div id="container" class="row">
+
+<div id="sub" class="span2 margin-left-10">
+
+<h3>Download Ranking</h3>
+<ul class="submenu">
+<li><a href="#">AllGenre</a></li>
+<li><a href="#">JapaneseMusic</a></li>
+<li><a href="#">ForeignMusic</a></li>
+<li><a href="#">Arrenger</a></li>
+<li><a href="#">Group</a></li>
+</ul>
+
+<h3>Upload Ranking</h3>
+<ul class="submenu">
+<li><a href="#">AllGenre</a></li>
+<li><a href="#">JapaneseMusic</a></li>
+<li><a href="#">ForeignMusic</a></li>
+<li><a href="#">Arrenger</a></li>
+<li><a href="#">Group</a></li>
+</ul>
+<p>hoho</p>
+
+</div>
+<!--/sub-->
+
+<div id="main" class="span7 margin-left-50">
+
+<h2>Notification</h2>
+<p>hogehoge<br />
+<a href="http://sharescores.q-x-p.net/" target="_blank">sample</a></p>
+
+<h2>Recently Upload</h2>
+
+<div class="new">
+<dl>
+<dt>2013/06/10</dt>
+<dd><a href="/">hoho</a><img src="images/icon_new.gif" alt="NEW" width="30" height="11" /></dd>
+</dl>
+<dl>
+<dt>2013/06/01</dt>
+<dd>test<img src="images/icon_up.gif" alt="UP" width="30" height="11" /></dd>
+</dl>
+<dl>
+<dt>2013/05/20</dt>
+<dd>sample</dd>
+</dl>
+</div>
+<!--/new-->
+
+</div>
+<!--/main-->
+
+</div>
+</div>
+
+<div id="footer">
+Copyright.
+</div>
+<!--/footer-->
+
+
+</div>
+<!--/container-->
+
+ <script type="text/javascript">
     $('.dropdown-toggle').dropdown();
-    </script>
-  </body>
+    window.addEventListener("load", function(){
+      rtc.video.on();
+    }, false);
+  </script>
+</body>
 </html>
