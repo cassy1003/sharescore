@@ -1,0 +1,24 @@
+<div id="content_profile" class="content bg-semi" style="display:none">
+  <ul>
+    <li>
+    id: <%= user.id_str %>
+    <li>
+    name: <%= user.name %>
+    <li>
+    nickname: <%= user.screen_name %>
+    <li>
+    location: <%= user.location %>
+    <li>
+    description: <%= user.description %>
+    <li>
+    url: <%= user.url %>
+    <li>
+    protected: <%= user.protected %>
+    <li>
+    timezone: <%= user.time_zone %>
+    <li>
+    language: <%= user.lang %>
+    <li>
+    profileImage: <img src="<%= user.profile_image_url %>">
+  </ul>
+</div>

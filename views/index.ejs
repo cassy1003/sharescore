@@ -1,67 +1,22 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>onebusiness</title>
-  <script type="text/javascript" src="/javascripts/jquery.js"></script>
-</head>
-
-<body>
-<% if (!auth){ %>
-  <a href="<%= conf.domain %>/auth/twitter"><u>Sign-in with twitter</u></a>
-  <hr>
-<% } else { %>
-  <p><a href="/signout"><u>Sign-out</u></a></p>
-  <hr>
-  <ul>
-    <li>
-    id: <%= user.id_str %>
-    <li>
-    name: <%= user.name %>
-    <li>
-    nickname: <%= user.screen_name %>
-    <li>
-    location: <%= user.location %>
-    <li>
-    description: <%= user.description %>
-    <li>
-    url: <%= user.url %>
-    <li>
-    protected: <%= user.protected %>
-    <li>
-    timezone: <%= user.time_zone %>
-    <li>
-    language: <%= user.lang %>
-    <li>
-    profileImage: <img src="<%= user.profile_image_url %>">
-  </ul>
-  <hr>
-  <form method="POST" action="/upload" enctype="multipart/form-data">
-    <p><input type="file" name="upload_file" accept="application/pdf"></p>
-    <p><input type="text" name="upload_text"></p>
-    <p><input type="submit" value="send"></p>
-  </form>
-  <p><font color="red">[TODO]</font> Chromeだとpdf限定にできたが、firefoxだとどんなファイルでもアップロードできてしまう。ブラウザのversion依存かな。あとで直す。というか、どのファイル形式を許可しようか。</p>
-  <p><font color="red">[TODO]</font> ファイルを選ばなくても送信できてしまう気がする。テキストのみは送信できないようにする。</p>
-  <p>注）テスト用なので、定期的にファイル消します。あんまり大きいファイルはやめてね(;_;)</p>
-  <% if (score) { %>
-    <table border="1">
-      <tr>
-        <th align="left">date</th><th align="left">user</th><th align="left">file</th><th align="left">message</th><th align="left">size(Byte)</th>
-      </tr>
-    <% score.forEach(function(val){ %>
-      <tr>
-        <td><%= val.date %></td>
-        <td>@<%= val.info.user.screen_name %></td>
-        <td><a href="/score/<%= val.info.savename %>" target="_blank"><%= val.info.filename %></a></td>
-        <td><%= val.info.text %></td>
-        <td><%= val.info.filesize %></td>
-      <tr>
-    <% }) %>
-    </table>
-  <% } %>
-<% } %>
-
-</body>
+  <% include header.ejs %>
+  <body onLoad="background.load()" onresize="background.load()">
+    <% include background.ejs %>
+    <div id="container">
+      <% if (!auth){ %>
+        <% include signin.ejs %>
+      <% } else { %>
+        <% include navi.ejs %>
+        <% include top.ejs %>
+        <% include about.ejs %>
+        <% include score.ejs %>
+        <% include profile.ejs %>
+        <% include help.ejs %>
+        <% include setting.ejs %>
+      <% } %>
+      <hr>
+    </div>
+  </body>
 </html>
 
