@@ -51,7 +51,7 @@ server.listen app.get('port'), () ->
 
 #socket.connect server
 
-dbWhisper = require('./mongodb/whisper')
-dbWhisper.connect()
 dbUser = require('./mongodb/user')
 dbUser.connect()
+dbScore = require('./mongodb/score')
+dbScore.connect()

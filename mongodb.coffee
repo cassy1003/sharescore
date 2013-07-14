@@ -1,8 +1,9 @@
 
 mongoose = require('mongoose')
 $ = require('jquery-deferred')
+conf = require("./conf").getConf()
 
-_DB_NAME = 'test'
+_DB_NAME = conf.db
 _DB = {}
 
 exports.database = () ->

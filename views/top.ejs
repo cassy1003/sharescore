@@ -12,10 +12,10 @@
       <% score.forEach(function(val){ %>
       <tr>
         <td><%= val.date %></td>
-        <td>@<%= val.info.user.screen_name %></td>
-        <td><a href="/score/<%= val.info.savename %>" target="_blank"><%= val.info.filename %></a></td>
-        <td><%= val.info.text %></td>
-        <td><%= val.info.filesize %></td>
+        <td>@<%= val.screen_name %></td>
+        <td><a href="/score/<%= val.savename %>" target="_blank"><%= val.filename %></a></td>
+        <td><%= val.text %></td>
+        <td><%= val.size %></td>
       <tr>
       <% }) %>
     </table>
@@ -23,7 +23,7 @@
   <hr>
   <h3>スコアのアップロード</h3>
   <form method="POST" action="/upload" enctype="multipart/form-data">
-    <p><input type="file" name="upload_file" accept="application/pdf"></p>
+    <p><input type="file" name="upload_file" required></p>
     <p><input type="text" name="upload_text"></p>
     <p><input type="submit" value="send"></p>
   </form>

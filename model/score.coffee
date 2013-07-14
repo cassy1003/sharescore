@@ -3,6 +3,7 @@ fs   = require 'fs'
 path = require 'path'
 $    = require 'jquery-deferred'
 commonM = require './common'
+dbScore = require("../mongodb/score")
 
 _scoreDir = './public/score'
 
@@ -18,27 +19,38 @@ exports.saveUploadFile = (req) ->
   user = req.session.auth?.twitter?.user
   info =
     text: text
-    filesize: filesize
+    size: filesize
     filename: filename
     savename: savename
-    user: user
+    user_id: user.id_str
+    screen_name: user.screen_name
 
   $.Deferred (d) ->
     fs.rename filepath, savepath, (err) ->
       unless err
         fs.unlink filepath, () ->
-          setScore(info)
+          console.log info
+          dbScore.save info
           d.resolve()
       else
         d.reject()
 
-setScore = (info) ->
-  _score = [] unless _score
-  _score.push(
-    timestamp: new Date() / 1
-    date: commonM.getDate()
-    info: info
-  )
-
 exports.getScore = () ->
-  return _score
+  $.Deferred (d) ->
+    dbScore.find
+      option:
+        limit: 3
+    .done(
+      (data) ->
+        scores = []
+        for v in data
+          scores.push
+            date: commonM.getDate v.ctime
+            user_id: v.user_id
+            screen_name: v.screen_name
+            filename: v.filename
+            savename: v.savename
+            text: v.text
+            size: v.size
+        d.resolve scores
+    )

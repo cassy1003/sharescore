@@ -2,17 +2,16 @@
 mongodb = require('../mongodb')
 
 _params = {
-  id: String,
-  name: String,
+  text: String,
+  size: Number,
+  filename: String,
+  savename: String,
+  user_id: String,
   screen_name: String,
-  image: {type: String, default: null},
-  time_zone: String,
-  lang: String,
+  status: {type: Number, default: 1}
   ctime: {type: Date, default: new Date()},
-  mtime: Date,
 }
-# Actualy, collection name is 'users' in mongodb
-_col = 'user'
+_col = 'score'
 
 exports.connect = () ->
   mongodb.connect _col, _params
@@ -26,7 +25,10 @@ exports.find = (params = {}) ->
   option = params.option ? {}
   mongodb.find _col, query, field, option
 
-exports.getUser = (id) ->
+exports.getScore = (id) ->
   exports.find
     query:
-      id: id
+      _id: id
+
+exports.getUploadedScore = () ->
+  exports.find()
