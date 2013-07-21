@@ -1,11 +1,12 @@
 
-dbUser = require("../mongodb/user")
+dbUser = require '../mongodb/user'
 userM = require '../model/user'
 scoreM = require '../model/score'
 conf = require('../conf').getConf()
 
 exports.index = (req, res, params = {}) ->
   user = req.session.auth?.twitter?.user
+  console.log user?.screen_name
   scoreM.getScore().done(
     (data) ->
       data = null if data.length is 0
@@ -30,27 +31,6 @@ exports.index = (req, res, params = {}) ->
             ctime: new Date()
             mtime: new Date()
     )
-  #dbWhisper.find
-  #  query:
-  #    to: '0'
-  #  option:
-  #    sort:
-  #      ts: -1
-  #.done(
-  #  (data) ->
-  #    result = []
-  #    for k, v of data
-  #      if v.id is '0'
-  #        name = 'anonymous'
-  #      else
-  #        # get user_info
-  #        name = 'test'
-  #      result.push
-  #        date: v.date
-  #        type: v.type
-  #        msg: v.msg
-  #        name: name
-  #)
 
 exports.signout = (req, res) ->
   delete req.session.auth

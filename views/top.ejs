@@ -19,10 +19,14 @@
       <tr>
       <% }) %>
     </table>
-  <% } %>
   <hr>
+  <% } %>
+  <% if (auth){ %>
   <h3>スコアのアップロード</h3>
   <form method="POST" action="/upload" enctype="multipart/form-data">
+    <!--
+    <p><input type="file" name="upload_file" accept="application/pdf"></p>
+    -->
     <p><input type="file" name="upload_file" required></p>
     <p><input type="text" name="upload_text"></p>
     <p><input type="submit" value="send"></p>
@@ -32,4 +36,7 @@
   <p><font color="red">[TODO]</font> ファイルを選ばなくても送信できてしまう気がする。テキストのみは送信できないようにする。</p>
   <p>注）テスト用なので、定期的にファイル消します。あんまり大きいファイルはやめてね(;_;)</p>
   </font>
+  <% } else { %>
+    Top Page
+  <% } %>
 </div>

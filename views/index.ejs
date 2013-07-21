@@ -5,6 +5,10 @@
     <% include background.ejs %>
     <div id="container">
       <% if (!auth){ %>
+        <% include navi_def.ejs %>
+        <% include top.ejs %>
+        <% include about.ejs %>
+        <% include help.ejs %>
         <% include signin.ejs %>
       <% } else { %>
         <% include navi.ejs %>
